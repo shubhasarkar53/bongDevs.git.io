@@ -46,7 +46,7 @@ export default function CourseCard({ course, role, published, onDelete }) {
         config
       );
       const data = resp.data;
-      console.log(data);
+
       onDelete(course._id);
     } catch (error) {
       console.log(error);

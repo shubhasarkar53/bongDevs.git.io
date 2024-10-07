@@ -1,10 +1,11 @@
+require("dotenv").config();
 const express = require("express");
+
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const cors = require("cors");
 const app = express();
-const port = 3000;
-require('dotenv').config();
+const port = process.env.PORT;
 
 app.use(cors());
 
@@ -86,7 +87,7 @@ function authUser(...userRoles) {
           err: err.message,
         });
       }
-      console.log(decoded);
+
       //if user exist then check for role
       if (!userRoles.includes(decoded.role)) {
         return res.status(401).json({
@@ -102,12 +103,9 @@ function authUser(...userRoles) {
 }
 
 //connect to the mongoose:
-mongoose.connect(
-  process.env.DB_URL,{
-    useNewUrlParser: true,
-  }
-);
-
+mongoose.connect(process.env.DB_URL, {
+  useNewUrlParser: true,
+});
 
 //admin signup 🍏
 
@@ -170,7 +168,6 @@ app.post("/admin/login", async (req, res) => {
     });
   }
 });
-
 
 //create a new course 🍏
 
@@ -242,7 +239,7 @@ app.get("/admin/courses", authUser("admin"), async (req, res) => {
 
 //view course details 🍏
 
-app.get("/courses/:courseId", authUser("admin","user"), async (req, res) => {
+app.get("/courses/:courseId", authUser("admin", "user"), async (req, res) => {
   const id = req.params.courseId;
 
   //check if course is valid
@@ -361,7 +358,6 @@ app.post("/users/signup", async (req, res) => {
 
   const isExist = await User.findOne({ username: user.username });
 
-  console.log(isExist);
 
   if (isExist) {
     return res.status(400).json({
@@ -450,7 +446,9 @@ app.post("/users/courses/:courseId", authUser("user"), async (req, res) => {
 
 app.get("/users/courses/purchased", authUser("user"), async (req, res) => {
   // Find the user that is requesting
-  const user = await User.findOne({ username: req.user.username }).populate('purchasedCourses');
+  const user = await User.findOne({ username: req.user.username }).populate(
+    "purchasedCourses"
+  );
 
   if (!user) {
     return res.status(404).json({
@@ -474,9 +472,8 @@ app.get("/users/courses/purchased", authUser("user"), async (req, res) => {
   });
 });
 
-
 //see all published courses 🍏
-app.get("/users/courses", authUser("user","admin"), async (req, res) => {
+app.get("/users/courses", authUser("user", "admin"), async (req, res) => {
   const publishedCourses = await Course.find({ published: true });
 
   if (!publishedCourses) {
@@ -494,44 +491,38 @@ app.get("/users/courses", authUser("user","admin"), async (req, res) => {
 });
 
 //admin profile 🍏
-app.get("/admin/profile", authUser("admin"), async(req,res)=>{
+app.get("/admin/profile", authUser("admin"), async (req, res) => {
+  const admin = await Admin.findOne({ username: req.user.username });
 
-  const admin = await Admin.findOne({username:req.user.username});
-
-  if(!admin){
+  if (!admin) {
     return res.status(404).json({
-      success:false,
-      message:"You are not authorized."
-    })
+      success: false,
+      message: "You are not authorized.",
+    });
   }
 
   res.status(200).json({
-    success:true,
-    admin
-  })
-
-
-
-})
+    success: true,
+    admin,
+  });
+});
 
 //user profile 🍏
-app.get("/users/profile", authUser("user"), async(req,res)=>{
+app.get("/users/profile", authUser("user"), async (req, res) => {
+  const user = await User.findOne({ username: req.user.username });
 
-  const user = await User.findOne({username:req.user.username});
-
-  if(!user){
+  if (!user) {
     return res.status(404).json({
-      success:false,
-      message:"You are not authorized."
-    })
+      success: false,
+      message: "You are not authorized.",
+    });
   }
 
   res.status(200).json({
-    success:true,
-    user
-  })
-})
-
+    success: true,
+    user,
+  });
+});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

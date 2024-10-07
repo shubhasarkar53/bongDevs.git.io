@@ -32,7 +32,7 @@ const CourseCheckout = () => {
 
       const data = resp.data.course;
 
-      console.log(data);
+
       setCourse(data);
     } catch (error) {
       console.log(error);
@@ -60,7 +60,6 @@ const CourseCheckout = () => {
 
       const data = resp.data;
 
-      console.log(data);
       alert(data.message);
 
       navigateTo(`/purchased-courses`)

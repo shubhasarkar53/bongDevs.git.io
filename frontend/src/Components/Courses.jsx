@@ -24,12 +24,12 @@ function Courses({ role }) {
 
         const data = resp.data.allCourses;
 
-        console.log(data);
+
         setCourseArr(data);
       } else {
         const resp = await axios.get(`${BASE_URL}/users/courses`, config);
         const data = resp.data.courses;
-        console.log("data is" + data);
+
         setCourseArr(data);
       }
     } catch (error) {

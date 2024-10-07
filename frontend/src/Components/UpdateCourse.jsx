@@ -72,7 +72,6 @@ const UpdateCourse = () => {
         }
       );
       alert("Course updated successfully")
-      console.log("Course updated successfully:", response.data);
       navigateTo("/courses");
     } catch (error) {
       console.error("Failed to update course:", error);

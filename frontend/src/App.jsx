@@ -32,11 +32,14 @@ function App() {
 
   const fetchUserDetails = async (token) => {
     try {
-      const response = await axios.get(`${BASE_URL}/${role==="admin"?"admin":"users"}/profile`, {
-        headers: {
-          authorization: "Bearer " + token,
-        },
-      });
+      const response = await axios.get(
+        `${BASE_URL}/${role === "admin" ? "admin" : "users"}/profile`,
+        {
+          headers: {
+            authorization: "Bearer " + token,
+          },
+        }
+      );
       setIsAuthenticated(true);
 
       if (response.data.admin) {
@@ -46,16 +49,15 @@ function App() {
         }
       } else {
         setRole("user");
-        if(response.data.user.username){
-          console.log(  'inside else' + response.data.user.username);
-          setUserEmail( response.data.user.username);
+        if (response.data.user.username) {
+
+          setUserEmail(response.data.user.username);
         }
       }
-      
 
       navigateTo("/");
     } catch (error) {
-      console.log("Error fetching user details", error);
+
       setIsAuthenticated(false);
       handleLogout();
       navigateTo("/login");
@@ -111,31 +113,12 @@ function App() {
           path="/admin/profile"
           element={<Profile userEmail={userEmail} />}
         />
-        <Route
-          path="/new-course"
-          element={<CreateCourse />}
-        />
-        <Route
-          path="/update-course/:id"
-          element={<UpdateCourse />}
-        />
-        <Route
-          path="/course/:id"
-          element={<CourseDetails />}
-        />
-        <Route
-          path="/course-checkout/:id"
-          element={<CourseCheckout />}
-        />
-        <Route
-          path="/purchased-courses"
-          element={<PurchasedCourses />}
-        />
-        <Route
-            path="/about-us"
-          element={<AboutUs/>}
-        />
-        
+        <Route path="/new-course" element={<CreateCourse />} />
+        <Route path="/update-course/:id" element={<UpdateCourse />} />
+        <Route path="/course/:id" element={<CourseDetails />} />
+        <Route path="/course-checkout/:id" element={<CourseCheckout />} />
+        <Route path="/purchased-courses" element={<PurchasedCourses />} />
+        <Route path="/about-us" element={<AboutUs />} />
       </Routes>
     </>
   );

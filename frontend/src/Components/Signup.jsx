@@ -35,7 +35,7 @@ async function handleSignup() {
 
     const data = response.data;
 
-    console.log(data);
+
 
     handleSignupProp(data.token);
     // setIsAuthenticated(true);

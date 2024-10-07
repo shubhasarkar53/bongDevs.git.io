@@ -52,7 +52,7 @@ function Login({handleLoginProp,setIsAuthenticated,role}) {
   
       const data = response.data;
   
-      console.log(data);
+
   
       handleLoginProp(data.token);
       // setIsAuthenticated(true);

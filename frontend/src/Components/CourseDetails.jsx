@@ -25,7 +25,6 @@ const CourseDetails = () => {
 
       const data = resp.data.course;
 
-      console.log(data);
       setCourse(data);
     } catch (error) {
       console.log(error);

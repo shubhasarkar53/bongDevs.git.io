@@ -39,7 +39,7 @@ function Home() {
 
       // get only the first 3 courses
       const firstThree = data.slice(0,3);
-      console.log(firstThree);
+
 
       setCourseArr(firstThree);
       

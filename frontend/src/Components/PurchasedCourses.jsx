@@ -29,7 +29,7 @@ const PurchasedCourses = () => {
         config
       );
       const data = resp.data.courses;
-      console.log("purcha" + data);
+
       setPurchasedCourses(data);
     } catch (error) {
       console.log(error);
