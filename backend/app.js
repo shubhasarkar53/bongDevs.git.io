@@ -243,31 +243,19 @@ app.get(
   "/admin/courses",
   authUser("admin"),
   asyncHandler(async (req, res) => {
-    const id = req.params.courseId;
+    //get everthing from Course
+    const allCourses = await Course.find();
 
-    //check if course is valid
-    const isValidCourse = await Course.findById(id);
-
-    if (isValidCourse) {
-      //take updated info from body
-      const updatedDetails = req.body;
-
-      const course = await Course.findByIdAndUpdate(id, updatedDetails, {
-        new: true,
+    if (allCourses) {
+      return res.status(200).json({
+        success: true,
+        message: "All The Courses",
+        allCourses,
       });
-
-      if (course) {
-        //resp
-        return res.status(200).json({
-          success: true,
-          message: "Course updated Successfully.",
-          courseId: course._id,
-        });
-      }
     } else {
       return res.status(404).json({
         success: false,
-        message: "Course ID is invalid",
+        message: "Course are not available currently.",
       });
     }
   })
@@ -285,21 +273,14 @@ app.get(
     const isValidCourse = await Course.findById(id);
 
     if (isValidCourse) {
-      //take updated info from body
-      const updatedDetails = req.body;
+      const course = await Course.findById(id);
 
-      const course = await Course.findByIdAndUpdate(id, updatedDetails, {
-        new: true,
+      //resp
+      return res.status(200).json({
+        success: true,
+        message: "Course details below -",
+        course,
       });
-
-      if (course) {
-        //resp
-        return res.status(200).json({
-          success: true,
-          message: "Course updated Successfully.",
-          courseId: course._id,
-        });
-      }
     } else {
       return res.status(404).json({
         success: false,
@@ -612,10 +593,9 @@ app.get(
   })
 );
 
-
 //global middlware to accept the errors
 app.use((err, req, res, next) => {
-  console.error(err.stack);  // Log error stack to the console
+  console.error(err.stack); // Log error stack to the console
 
   // Send JSON response with error details
   res.status(err.status || 500).json({
@@ -623,7 +603,6 @@ app.use((err, req, res, next) => {
     message: err.message || "Internal Server Error",
   });
 });
-
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
