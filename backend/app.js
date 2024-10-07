@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const cors = require("cors");
 const app = express();
 const port = 3000;
+require('dotenv').config();
 
 app.use(cors());
 
@@ -44,7 +45,7 @@ const Course = mongoose.model("Course", courseSchema);
 
 //Secret key for token creation
 
-const secret = "jvhsJKC4a";
+const secret = process.env.JWT_SECRET;
 
 //Function to create JWT token
 
@@ -102,7 +103,9 @@ function authUser(...userRoles) {
 
 //connect to the mongoose:
 mongoose.connect(
-  "mongodb+srv://sleditz53:IicSEKsUjyi8gWlx@shubhadb.rgap3.mongodb.net/courses2"
+  process.env.DB_URL,{
+    useNewUrlParser: true,
+  }
 );
 
 
