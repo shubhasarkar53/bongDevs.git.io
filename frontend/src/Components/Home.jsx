@@ -11,10 +11,10 @@ import React, { useEffect, useState } from "react";
 import Hero from "./Hero";
 import CourseCard from "./CourseCard";
 
-import axios from "axios";
 import { BASE_URL } from "../config";
 import { useNavigate } from "react-router-dom";
 import Footer from "./Footer";
+import instanceAxios from "../utills/axios";
 
 
 
@@ -33,7 +33,7 @@ function Home() {
           authorization:"Bearer " + localStorage.getItem("token")
         }
       }
-      const resp = await axios.get(`${BASE_URL}/users/courses`,config);
+      const resp = await instanceAxios.get(`${BASE_URL}/users/courses`,config);
 
       const data = resp.data.courses;
 

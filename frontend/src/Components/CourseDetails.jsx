@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Box, Container, Grid, Typography, Button, CircularProgress } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
+
 import { BASE_URL } from "../config";
 import Footer from "./Footer";
+import instanceAxios from "../utills/axios";
 
 const CourseDetails = () => {
 
@@ -21,7 +22,7 @@ const CourseDetails = () => {
         },
       };
 
-      const resp = await axios.get(`${BASE_URL}/courses/${id}`, config);
+      const resp = await instanceAxios.get(`${BASE_URL}/courses/${id}`, config);
 
       const data = resp.data.course;
 

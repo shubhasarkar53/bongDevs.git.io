@@ -9,9 +9,10 @@ import {
   FormControlLabel,
   Paper,
 } from "@mui/material";
-import axios from "axios";
+
 import { BASE_URL } from "../config";
 import { useNavigate } from "react-router-dom";
+import instanceAxios from "../utills/axios";
 
 function CreateCourse() {
   const navigateTo = useNavigate();
@@ -39,7 +40,7 @@ function CreateCourse() {
           authorization: "Bearer " + localStorage.getItem("token"),
         },
       };
-      await axios.post(`${BASE_URL}/admin/courses`, formValues, config);
+      await instanceAxios.post(`${BASE_URL}/admin/courses`, formValues, config);
       alert("Course created successfully!");
     } catch (error) {
       console.error("Error creating course:", error);

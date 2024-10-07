@@ -11,8 +11,7 @@ app.use(
   cors({
     origin: process.env.FRONTEND_URL || "http://localhost:5173", 
     credentials: true, // Allow cookies and headers if you're using them
-    methods: "GET,POST,PUT,DELETE", // Specify allowed HTTP methods
-    allowedHeaders: "Content-Type,Authorization", // Specify allowed headers
+   
   })
 );
 

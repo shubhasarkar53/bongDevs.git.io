@@ -10,8 +10,9 @@ import {
   Button,
   CircularProgress,
 } from "@mui/material";
-import axios from "axios";
+
 import { BASE_URL } from "../config";
+import instanceAxios from "../utills/axios";
 
 const PurchasedCourses = () => {
   const [purchasedCourses, setPurchasedCourses] = useState([]);
@@ -24,7 +25,7 @@ const PurchasedCourses = () => {
         },
       };
 
-      const resp = await axios.get(
+      const resp = await instanceAxios.get(
         `${BASE_URL}/users/courses/purchased`,
         config
       );

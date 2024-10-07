@@ -6,8 +6,9 @@ import { useNavigate } from "react-router-dom";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import { Container, Typography } from "@mui/material";
-import axios from "axios";
+
 import { BASE_URL } from "../config";
+import instanceAxios from "../utills/axios";
 
 function Signup({handleSignupProp,setIsAuthenticated,role}) {
   const [email, setEmail] = useState("");
@@ -28,7 +29,7 @@ async function handleSignup() {
   try {
 
     const config = { headers: { "Content-type": "application/json" } };
-    const response = await axios.post(`${BASE_URL}/${role==="admin"?"admin":"users"}/signup`, {
+    const response = await instanceAxios.post(`${BASE_URL}/${role==="admin"?"admin":"users"}/signup`, {
       username: email,
       password: password,
     }, config);

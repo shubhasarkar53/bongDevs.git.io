@@ -8,8 +8,9 @@ import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
 import { Link, useNavigate } from "react-router-dom";
 import { Chip } from "@mui/material";
-import axios from "axios";
+
 import { BASE_URL } from "../config";
+import instanceAxios from "../utills/axios";
 const StyledCard = styled(Card)(({ theme }) => ({
   maxWidth: 345,
   borderRadius: "15px",
@@ -41,7 +42,7 @@ export default function CourseCard({ course, role, published, onDelete }) {
         },
       };
 
-      const resp = await axios.delete(
+      const resp = await instanceAxios.delete(
         `${BASE_URL}/admin/courses/${course._id}`,
         config
       );

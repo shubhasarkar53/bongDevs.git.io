@@ -11,8 +11,9 @@ import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import { Container, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+
 import { BASE_URL } from "../config";
+import instanceAxios from "../utills/axios";
 
 function Login({handleLoginProp,setIsAuthenticated,role}) {
   const [showPassword, setShowPassword] = React.useState(false);
@@ -48,7 +49,7 @@ function Login({handleLoginProp,setIsAuthenticated,role}) {
         }
       };
   
-      const response = await axios.post(`${BASE_URL}/${role==="admin"?"admin":"users"}/login`, {}, config);
+      const response = await instanceAxios.post(`${BASE_URL}/${role==="admin"?"admin":"users"}/login`, {}, config);
   
       const data = response.data;
   

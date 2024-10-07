@@ -7,7 +7,7 @@ import Navbar from "./Components/Navbar";
 import Profile from "./Components/Profile";
 import Signup from "./Components/Signup";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import axios from "axios";
+
 import { BASE_URL } from "./config";
 import { useNavigate } from "react-router-dom";
 import CreateCourse from "./Components/CreateCourse";
@@ -17,6 +17,7 @@ import CourseCheckout from "./Components/CourseCheckout";
 import PurchasedCourses from "./Components/PurchasedCourses";
 import Footer from "./Components/Footer";
 import AboutUs from "./Components/AboutUs";
+import instanceAxios from "./utills/axios";
 
 function App() {
   const navigateTo = useNavigate();
@@ -32,7 +33,7 @@ function App() {
 
   const fetchUserDetails = async (token) => {
     try {
-      const response = await axios.get(
+      const response = await instanceAxios.get(
         `${BASE_URL}/${role === "admin" ? "admin" : "users"}/profile`,
         {
           headers: {

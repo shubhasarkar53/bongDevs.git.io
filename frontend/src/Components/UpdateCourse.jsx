@@ -10,9 +10,10 @@ import {
   Container,
 } from "@mui/material";
 import CourseCard from "./CourseCard";
-import axios from "axios";
+
 import { BASE_URL } from "../config";
 import { useNavigate, useParams } from "react-router-dom";
+import instanceAxios from "../utills/axios";
 
 const UpdateCourse = () => {
 
@@ -31,7 +32,7 @@ const UpdateCourse = () => {
     // Fetch the course details when the component mounts
     async function fetchCourseDetails() {
       try {
-        const response = await axios.get(`${BASE_URL}/courses/${id}`, {
+        const response = await instanceAxios.get(`${BASE_URL}/courses/${id}`, {
           headers: {
             authorization: "Bearer " + localStorage.getItem("token"),
           },
@@ -62,7 +63,7 @@ const UpdateCourse = () => {
 
   const handleUpdateCourse = async () => {
     try {
-      const response = await axios.put(
+      const response = await instanceAxios.put(
         `${BASE_URL}/admin/courses/${id}`,
         course,
         {

@@ -3,8 +3,9 @@ import CourseCard from "./CourseCard";
 import Footer from "./Footer";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+
 import { BASE_URL } from "../config";
+import instanceAxios from "../utills/axios";
 
 function Courses({ role }) {
   const [courseArr, setCourseArr] = useState([]);
@@ -20,14 +21,14 @@ function Courses({ role }) {
       };
 
       if (role === "admin") {
-        const resp = await axios.get(`${BASE_URL}/admin/courses`, config);
+        const resp = await instanceAxios.get(`${BASE_URL}/admin/courses`, config);
 
         const data = resp.data.allCourses;
 
 
         setCourseArr(data);
       } else {
-        const resp = await axios.get(`${BASE_URL}/users/courses`, config);
+        const resp = await instanceAxios.get(`${BASE_URL}/users/courses`, config);
         const data = resp.data.courses;
 
         setCourseArr(data);

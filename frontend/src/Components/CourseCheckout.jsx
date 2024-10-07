@@ -9,9 +9,10 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
+
 import { BASE_URL } from "../config";
 import Footer from "./Footer";
+import instanceAxios from "../utills/axios";
 
 const CourseCheckout = () => {
 
@@ -28,7 +29,7 @@ const CourseCheckout = () => {
         },
       };
 
-      const resp = await axios.get(`${BASE_URL}/courses/${id}`, config);
+      const resp = await instanceAxios.get(`${BASE_URL}/courses/${id}`, config);
 
       const data = resp.data.course;
 
@@ -52,7 +53,7 @@ const CourseCheckout = () => {
           authorization: "Bearer " + localStorage.getItem("token"),
         },
       };
-      const resp = await axios.post(
+      const resp = await instanceAxios.post(
         `${BASE_URL}/users/courses/${courseId}`,
         {},
         config
