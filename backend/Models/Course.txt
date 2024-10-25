@@ -1,0 +1,27 @@
+const mongoose = require("mongoose");
+
+const courseSchema = new mongoose.Schema(
+  {
+    title: String,
+    description: String,
+    price: Number,
+    regularPrice: Number,
+    imgUrl: String,
+    videoUrl: String,
+    createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    averageRating: Number, // New field
+    buyCount: Number,
+    published: Boolean,
+    createdAt: Date,
+  },
+  { timestamps: true }
+);
+
+const Course = mongoose.model("Course", courseSchema);
+
+module.exports = Course;
+
+
+
+
+

@@ -1,0 +1,31 @@
+const mongoose = require("mongoose");
+
+const paymentSchema = new mongoose.Schema(
+  {
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }, // User who made the payment
+    course: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Course",
+      required: true,
+    }, // Purchased course
+    amount: { type: Number, required: true }, // Amount paid
+    paymentMethod: {
+      type: String,
+      enum: ["card", "paypal", "stripe"],
+      required: true,
+    }, // Payment method
+    transactionId: { type: String, required: true, unique: true }, // Unique transaction ID from the payment gateway
+    status: {
+      type: String,
+      enum: ["pending", "completed", "failed", "refunded"],
+      default: "pending",
+    }, // Payment status
+    createdAt: { type: Date, default: Date.now }, // Timestamp of the payment
+    updatedAt: { type: Date, default: Date.now }, // For tracking status changes
+  },
+  { timestamps: true }
+);
+
+const Payment = mongoose.model("Payment", paymentSchema);
+
+module.exports = Payment;
